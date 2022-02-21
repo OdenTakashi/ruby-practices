@@ -68,7 +68,7 @@ def main
     flags = params[:a] ? File::FNM_DOTMATCH : 0
     base_filesnames = Dir.glob('*', flags, base: directory)
     filesnames = base_filesnames.then { |b| params[:r] ? b.reverse : b }
-    
+
     if params[:l]
       main_option_l(filesnames, directory)
     else
