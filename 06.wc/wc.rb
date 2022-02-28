@@ -1,52 +1,68 @@
-#ファイル内の行数、ワード数、およびバイト数
-#-l	行数をカウントします。 
+# frozen_file_contenting_literal: true
 
-# methodA
-	# - ファイル内の行数 == method a1
-	# -	ワード数 == method a2
-	# -	およびバイト数 == method a3
-	# ..の表示 
+SPACE = '       '
 
-		# method a1
-		# -	ファイル内の行数の数値の取得
-		# method a2 
-		# - ワード数の取得
-		#	method a3
-		# - およびバイト数の取得
-		
-# ディレクトリを指定した場合
-# wc: ../: read: Is a directory
-	#  0       0       0 total
-
-def output(str, f)
-  get_file_lines(str)
-  get_words_count(str)
-	get_bytes_values(f)
-	puts " #{f}"
+def wc_main(filename)
+  file_content = File.read(filename)
+  { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(filename), file_name: filename }
 end
 
-def get_file_lines(str)
-	print "       "
-	print str.count("\n")
+def count_lines(file_content)
+  file_content.count("\n")
 end
 
-def get_words_count(str)
-	ary = str.split(/\s+/)
-	print "       "
-	print ary.size
+def count_words(file_content)
+  ary = file_content.split(/\s+/)
+  ary.size
 end
 
-def get_bytes_values(f)
-	print "      "
-	print File.size(f)
+def count_bytes(filename)
+  File.size(filename)
+end
+
+def total_result(contents)
+  total = { lines: 0, words: 0, bytes: 0, file_name: 'total' }
+  contents.each do |hash|
+    total[:lines] += hash[:lines]
+    total[:words] += hash[:words]
+    total[:bytes] += hash[:bytes]
+  end
+	total
+end
+
+# def output_total_result(total)
+  # puts "#{total[:lines]} #{total[:words]} #{total[:bytes]} total"
+# end
+
+def output(contents)
+	contents.each do |content|
+		puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
+	end
 end
 
 def main
-	filesnames = ARGV
-	filesnames.each do |f|
-		str = File.read(f)
-		output(str, f)
+  filesnames = ARGV
+  # ary = []
+  # filesnames.each do |filename|
+  #   file_content = File.read(filename)
+		
+  #   hash = { lines: file_lines(file_content), words: words_count(file_content), bytes: bytes_values(filename) }
+  #   ary << hash
+  #   wc_main(file_content, filename)
+  # end
+  # total_result(ary) if filesnames.count > 1
+
+  # content = [
+  #   { lines: lines, words: words, bytes: bytes, file_name: file_name }
+  #   { lines: lines, words: words, bytes: bytes, file_name: file_name }
+  # ]
+
+	contents = filesnames.map do |filename|
+		wc_main(filename) # { lines: lines, words: words, bytes: bytes, file_name: file_name }
 	end
+
+  contents << total_result(contents) if filesnames.count > 1
+  output(contents)
 end
 
 main
