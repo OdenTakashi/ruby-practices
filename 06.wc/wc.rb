@@ -1,10 +1,10 @@
 # frozen_file_contenting_literal: true
 
-SPACE = '       '
+require 'optparse'
 
 def wc_main(filename)
-  file_content = File.read(filename)
-  { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(filename), file_name: filename }
+  file_content = ARGV.empty? ? filename : File.read(filename)
+  { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
 end
 
 def count_lines(file_content)
@@ -16,8 +16,9 @@ def count_words(file_content)
   ary.size
 end
 
-def count_bytes(filename)
-  File.size(filename)
+def count_bytes(file_content)
+  # File.size(filename)
+	file_content.bytesize
 end
 
 def total_result(contents)
@@ -30,10 +31,6 @@ def total_result(contents)
 	total
 end
 
-# def output_total_result(total)
-  # puts "#{total[:lines]} #{total[:words]} #{total[:bytes]} total"
-# end
-
 def output(contents)
 	contents.each do |content|
 		puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
@@ -41,27 +38,24 @@ def output(contents)
 end
 
 def main
-  filesnames = ARGV
-  # ary = []
-  # filesnames.each do |filename|
-  #   file_content = File.read(filename)
-		
-  #   hash = { lines: file_lines(file_content), words: words_count(file_content), bytes: bytes_values(filename) }
-  #   ary << hash
-  #   wc_main(file_content, filename)
-  # end
-  # total_result(ary) if filesnames.count > 1
+	params = {}
+	opt = OptionParser.new
+	opt.on('-l') { |v| v }
+	opt.parse!(ARGV, into: params)
 
-  # content = [
-  #   { lines: lines, words: words, bytes: bytes, file_name: file_name }
-  #   { lines: lines, words: words, bytes: bytes, file_name: file_name }
-  # ]
-
+  filesnames = ARGV.empty? ? gets.split : ARGV
 	contents = filesnames.map do |filename|
-		wc_main(filename) # { lines: lines, words: words, bytes: bytes, file_name: file_name }
+		wc_main(filename)
 	end
 
   contents << total_result(contents) if filesnames.count > 1
+	if params[:l]
+		contents.each do |content|
+			content.delete(:words)
+			content.delete(:bytes)
+		end
+	end
+
   output(contents)
 end
 
