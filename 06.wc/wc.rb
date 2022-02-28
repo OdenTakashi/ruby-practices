@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # frozen_file_contenting_literal: true
 
 require 'optparse'
@@ -17,8 +19,7 @@ def count_words(file_content)
 end
 
 def count_bytes(file_content)
-  # File.size(filename)
-	file_content.bytesize
+  file_content.bytesize
 end
 
 def total_result(contents)
@@ -28,33 +29,33 @@ def total_result(contents)
     total[:words] += hash[:words]
     total[:bytes] += hash[:bytes]
   end
-	total
+  total
 end
 
 def output(contents)
-	contents.each do |content|
-		puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
-	end
+  contents.each do |content|
+    puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
+  end
 end
 
 def main
-	params = {}
-	opt = OptionParser.new
-	opt.on('-l') { |v| v }
-	opt.parse!(ARGV, into: params)
+  params = {}
+  opt = OptionParser.new
+  opt.on('-l') { |v| v }
+  opt.parse!(ARGV, into: params)
 
   filesnames = ARGV.empty? ? gets.split : ARGV
-	contents = filesnames.map do |filename|
-		wc_main(filename)
-	end
+  contents = filesnames.map do |filename|
+    wc_main(filename)
+  end
 
   contents << total_result(contents) if filesnames.count > 1
-	if params[:l]
-		contents.each do |content|
-			content.delete(:words)
-			content.delete(:bytes)
-		end
-	end
+  if params[:l]
+    contents.each do |content|
+      content.delete(:words)
+      content.delete(:bytes)
+    end
+  end
 
   output(contents)
 end
