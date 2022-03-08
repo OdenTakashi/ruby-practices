@@ -5,7 +5,7 @@
 require 'optparse'
 
 def wc_main(filename)
-  file_content = ARGV.empty? ? filename : File.read(filename)
+  file_content = File.read(filename)
   { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
 end
 
@@ -32,32 +32,52 @@ def total_result(contents)
   total
 end
 
+# def delete_words_bytes(contents)
+# 	contents.each do |content|
+# 		content.delete(:words)
+# 		content.delete(:bytes)
+# 	end
+# end
+
 def output(contents)
   contents.each do |content|
     puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
   end
 end
 
-def main
-  params = {}
-  opt = OptionParser.new
-  opt.on('-l') { |v| v }
-  opt.parse!(ARGV, into: params)
+def standard_output(standard_contents)
+	puts "#{standard_contents[:lines]} #{standard_contents[:words]} #{standard_contents[:bytes]}"
+end
 
-  filesnames = ARGV.empty? ? gets.split : ARGV
+def main(params)
+  filesnames = ARGV
   contents = filesnames.map do |filename|
     wc_main(filename)
   end
-
   contents << total_result(contents) if filesnames.count > 1
-  if params[:l]
-    contents.each do |content|
+	if params[:l]
+		contents.each do |content|
       content.delete(:words)
       content.delete(:bytes)
-    end
-  end
-
+		end
+	end
   output(contents)
 end
 
-main
+def standard_main(params)
+	standard_input = $stdin.read
+	standard_contents = 
+	{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input)}
+	if params[:l]
+		standard_contents.delete(:words)
+		standard_contents.delete(:bytes)
+	end
+	standard_output(standard_contents)
+end
+
+params = {}
+opt = OptionParser.new
+opt.on('-l') { |v| v }
+opt.parse!(ARGV, into: params)
+
+ARGV.empty? ? standard_main(params) : main(params)
