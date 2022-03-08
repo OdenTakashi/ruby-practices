@@ -32,12 +32,13 @@ def total_result(contents)
   total
 end
 
-# def delete_words_bytes(contents)
-# 	contents.each do |content|
-# 		content.delete(:words)
-# 		content.delete(:bytes)
-# 	end
-# end
+def remove_words_bytes(contents)
+	contents.each do |content|
+		content.delete(:words)
+		content.delete(:bytes)
+	end
+	contents
+end
 
 def output(contents)
   contents.each do |content|
@@ -46,7 +47,9 @@ def output(contents)
 end
 
 def standard_output(standard_contents)
-	puts "#{standard_contents[:lines]} #{standard_contents[:words]} #{standard_contents[:bytes]}"
+	standard_contents.each do |standard_content|
+		puts "#{standard_content[:lines]} #{standard_content[:words]} #{standard_content[:bytes]}"
+	end
 end
 
 def main(params)
@@ -55,23 +58,15 @@ def main(params)
     wc_main(filename)
   end
   contents << total_result(contents) if filesnames.count > 1
-	if params[:l]
-		contents.each do |content|
-      content.delete(:words)
-      content.delete(:bytes)
-		end
-	end
+	contents = remove_words_bytes(contents) if params[:l]
   output(contents)
 end
 
 def standard_main(params)
 	standard_input = $stdin.read
 	standard_contents = 
-	{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input)}
-	if params[:l]
-		standard_contents.delete(:words)
-		standard_contents.delete(:bytes)
-	end
+	[{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input)}]
+	standard_contents = remove_words_bytes(standard_contents) if params[:l]
 	standard_output(standard_contents)
 end
 
