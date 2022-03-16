@@ -26,6 +26,26 @@ def count_bytes(file_content)
   file_content.bytesize
 end
 
+def count_sizes_of_file(params)
+  filenames = ARGV
+  contents = filenames.map do |filename|
+    file_content = File.read(filename)
+    { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
+  end
+  contents << total_result(contents) if filenames.count > 1
+  contents = remove_words_bytes(contents) if params[:l]
+  output_info_of_file(contents)
+end
+
+def count_sizes_of_stdin(params)
+  standard_input = $stdin.read
+  standard_contents =
+    [{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input) }]
+  standard_contents = remove_words_bytes(standard_contents) if params[:l]
+  output_info_of_stdin(standard_contents)
+end
+
+
 def total_result(contents)
   total = { lines: 0, words: 0, bytes: 0, file_name: 'total' }
   contents.each do |hash|
@@ -54,25 +74,6 @@ def output_info_of_stdin(standard_contents)
   standard_contents.each do |standard_content|
     puts "#{standard_content[:lines]} #{standard_content[:words]} #{standard_content[:bytes]}"
   end
-end
-
-def count_sizes_of_file(params)
-  filenames = ARGV
-  contents = filenames.map do |filename|
-    file_content = File.read(filename)
-    { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
-  end
-  contents << total_result(contents) if filenames.count > 1
-  contents = remove_words_bytes(contents) if params[:l]
-  output_info_of_file(contents)
-end
-
-def count_sizes_of_stdin(params)
-  standard_input = $stdin.read
-  standard_contents =
-    [{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input) }]
-  standard_contents = remove_words_bytes(standard_contents) if params[:l]
-  output_info_of_stdin(standard_contents)
 end
 
 main
