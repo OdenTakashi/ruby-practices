@@ -44,13 +44,13 @@ def remove_words_bytes(contents)
   contents
 end
 
-def output(contents)
+def output_info_of_file(contents)
   contents.each do |content|
     puts "#{content[:lines]} #{content[:words]} #{content[:bytes]} #{content[:file_name]}"
   end
 end
 
-def standard_output(standard_contents)
+def output_info_of_stdin(standard_contents)
   standard_contents.each do |standard_content|
     puts "#{standard_content[:lines]} #{standard_content[:words]} #{standard_content[:bytes]}"
   end
@@ -64,7 +64,7 @@ def count_sizes_of_file(params)
   end
   contents << total_result(contents) if filenames.count > 1
   contents = remove_words_bytes(contents) if params[:l]
-  output(contents)
+  output_info_of_file(contents)
 end
 
 def count_sizes_of_stdin(params)
@@ -72,7 +72,7 @@ def count_sizes_of_stdin(params)
   standard_contents =
     [{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input) }]
   standard_contents = remove_words_bytes(standard_contents) if params[:l]
-  standard_output(standard_contents)
+  output_info_of_stdin(standard_contents)
 end
 
 main
