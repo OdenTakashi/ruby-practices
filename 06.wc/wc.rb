@@ -4,9 +4,13 @@
 
 require 'optparse'
 
-def wc_main(filename)
-  file_content = File.read(filename)
-  { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
+def main
+  params = {}
+  opt = OptionParser.new
+  opt.on('-l') { |v| v }
+  opt.parse!(ARGV, into: params)
+
+  ARGV.empty? ? count_sizes_of_stdin(params) : count_sizes_of_file(params)
 end
 
 def count_lines(file_content)
@@ -52,17 +56,18 @@ def standard_output(standard_contents)
   end
 end
 
-def main(params)
-  filesnames = ARGV
-  contents = filesnames.map do |filename|
-    wc_main(filename)
+def count_sizes_of_file(params)
+  filenames = ARGV
+  contents = filenames.map do |filename|
+    file_content = File.read(filename)
+    { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
   end
-  contents << total_result(contents) if filesnames.count > 1
+  contents << total_result(contents) if filenames.count > 1
   contents = remove_words_bytes(contents) if params[:l]
   output(contents)
 end
 
-def standard_main(params)
+def count_sizes_of_stdin(params)
   standard_input = $stdin.read
   standard_contents =
     [{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input) }]
@@ -70,9 +75,6 @@ def standard_main(params)
   standard_output(standard_contents)
 end
 
-params = {}
-opt = OptionParser.new
-opt.on('-l') { |v| v }
-opt.parse!(ARGV, into: params)
+main
 
-ARGV.empty? ? standard_main(params) : main(params)
+# 標準入力から得た文字列の行数、文字数、バイト数をカウントして出力メソッドに渡す。
