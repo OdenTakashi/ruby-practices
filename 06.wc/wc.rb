@@ -76,5 +76,3 @@ def count_sizes_of_stdin(params)
 end
 
 main
-
-# 標準入力から得た文字列の行数、文字数、バイト数をカウントして出力メソッドに渡す。
