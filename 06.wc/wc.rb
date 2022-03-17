@@ -7,7 +7,7 @@ require 'optparse'
 def main
   params = {}
   opt = OptionParser.new
-  opt.on('-l') { |v| v }
+  opt.on('-l', '--onlylines') { |v| v }
   opt.parse!(ARGV, into: params)
 
   ARGV.empty? ? count_sizes_of_stdin(params) : count_sizes_of_file(params)
@@ -33,7 +33,7 @@ def count_sizes_of_file(params)
     { lines: count_lines(file_content), words: count_words(file_content), bytes: count_bytes(file_content), file_name: filename }
   end
   contents << total_result(contents) if filenames.count > 1
-  contents = remove_words_bytes(contents) if params[:l]
+  contents = remove_words_bytes(contents) if params[:onlylines]
   output_info_of_file(contents)
 end
 
@@ -41,7 +41,7 @@ def count_sizes_of_stdin(params)
   standard_input = $stdin.read
   standard_contents =
     [{ lines: count_lines(standard_input), words: count_words(standard_input), bytes: count_bytes(standard_input) }]
-  standard_contents = remove_words_bytes(standard_contents) if params[:l]
+  standard_contents = remove_words_bytes(standard_contents) if params[:onlylines]
   output_info_of_stdin(standard_contents)
 end
 
