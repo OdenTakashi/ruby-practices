@@ -5,4 +5,4 @@ RSpec.describe Shot do
 		shot = Shot.new('X')
     expect(shot.score).to eq 10
   end
-endla
+end
