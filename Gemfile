@@ -11,3 +11,7 @@ group :development do
   gem 'rubocop-fjord', require: false
 end
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
