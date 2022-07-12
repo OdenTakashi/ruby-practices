@@ -1,4 +1,0 @@
-example_id                | status | run_time        |
-------------------------- | ------ | --------------- |
-./spec/frame_spec.rb[1:1] | passed | 0.00061 seconds |
-./spec/shot_spec.rb[1:1]  | passed | 0.00063 seconds |
