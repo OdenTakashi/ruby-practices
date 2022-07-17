@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class Game
-  attr_reader :frames
 
   def initialize(marks)
     @frames = build_frames(marks)
   end
 
   def score
-    frames.each_with_index.sum do |frame, idx|
-      final_frame?(idx) ? frame.final_score : not_final_frame_score(frame, frames, idx)
+    @frames.each_with_index.sum do |frame, idx|
+      final_frame?(idx) ? frame.final_score : not_final_frame_score(frame, @frames, idx)
     end
   end
 
