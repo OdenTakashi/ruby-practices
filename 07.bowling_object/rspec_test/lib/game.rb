@@ -25,7 +25,7 @@ class Game
         frames << [10, nil]
         shots.unshift(frame.last)
       else
-        frames << frame
+        frames << frame.map(&:score)
       end
     end
     frames << shots.map(&:score)
