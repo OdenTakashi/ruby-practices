@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require '/Users/kodamanaoki/ruby-practices/07.bowling_object/rspec_test/lib/frame'
+require '/Users/kodamanaoki/ruby-practices/07.bowling_object/rspec_test/lib/shot'
 class Game
-
   def initialize(marks)
     @frames = build_frames(marks)
   end
@@ -58,3 +59,7 @@ class Game
     end
   end
 end
+
+args = ARGV[0]
+game = Game.new(args)
+p game.score
