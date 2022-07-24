@@ -2,6 +2,7 @@
 
 class Shot
   attr_reader :mark
+  STRIKE = 10
 
   def initialize(mark)
     @mark = mark

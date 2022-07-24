@@ -4,6 +4,8 @@ require_relative 'frame.rb'
 require_relative 'shot.rb'
 
 class Game
+  STRIKE = 10
+
   def initialize(marks)
     @frames = build_frames(marks)
   end
