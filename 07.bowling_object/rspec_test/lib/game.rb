@@ -4,6 +4,7 @@ require_relative 'frame.rb'
 require_relative 'shot.rb'
 
 class Game
+  FINAL_FRAME_NUMBER = 9
   STRIKE = 10
 
   def initialize(marks)
@@ -37,7 +38,7 @@ class Game
   end
 
   def final_frame?(frame_number)
-    frame_number == 9
+    frame_number == FINAL_FRAME_NUMBER
   end
 
   def point_of_strike(frame, frames, idx)
