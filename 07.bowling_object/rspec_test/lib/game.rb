@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require '/Users/kodamanaoki/ruby-practices/07.bowling_object/rspec_test/lib/frame'
-require '/Users/kodamanaoki/ruby-practices/07.bowling_object/rspec_test/lib/shot'
+require_relative 'frame.rb'
+require_relative 'shot.rb'
+
 class Game
   def initialize(marks)
     @frames = build_frames(marks)
