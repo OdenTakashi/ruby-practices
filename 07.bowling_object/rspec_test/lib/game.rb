@@ -27,7 +27,7 @@ class Game
     9.times do
       frame = shots.shift(2)
       if frame.first.strike?
-        frames << [10, nil]
+        frames << [STRIKE, nil]
         shots.unshift(frame.last)
       else
         frames << frame.map(&:score)
