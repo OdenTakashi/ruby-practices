@@ -19,10 +19,10 @@ class Frame
   end
 
   def strike?
-    @first_shot.score == 10
+    @first_shot.score == STRIKE
   end
 
   def spare?
-    score == 10
+    score == STRIKE
   end
 end
