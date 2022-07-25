@@ -12,7 +12,7 @@ class Game
 
   def score
     @frames.each_with_index.sum do |frame, idx|
-      final_frame?(idx) ? frame.final_score : not_final_frame_score(frame, @frames, idx)
+      final_frame?(idx) ? frame.final_score : not_final_frame_score(frame, idx)
     end
   end
 
@@ -39,23 +39,23 @@ class Game
     frame_number == FINAL_FRAME_NUMBER
   end
 
-  def point_of_strike(frame, frames, idx)
-    if frames[idx + 1].strike? && !frames[idx + 2].nil?
-      frame.score + frames[idx + 1].score + frames[idx + 2].first_shot.score
+  def point_of_strike(frame, idx)
+    if @frames[idx + 1].strike? && !@frames[idx + 2].nil?
+      frame.score + @frames[idx + 1].score + @frames[idx + 2].first_shot.score
     else
-      frame.score + frames[idx + 1].score
+      frame.score + @frames[idx + 1].score
     end
   end
 
-  def point_of_spare(frame, frames, idx)
-    frame.score + frames[idx + 1].first_shot.score
+  def point_of_spare(frame, idx)
+    frame.score + @frames[idx + 1].first_shot.score
   end
 
-  def not_final_frame_score(frame, frames, idx)
+  def not_final_frame_score(frame, idx)
     if frame.strike?
-      point_of_strike(frame, frames, idx)
+      point_of_strike(frame, idx)
     elsif frame.spare?
-      point_of_spare(frame, frames, idx)
+      point_of_spare(frame, idx)
     else
       frame.score
     end
