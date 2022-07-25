@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'frame.rb'
-require_relative 'shot.rb'
+require_relative 'frame'
+require_relative 'shot'
 
 class Game
   FINAL_FRAME_NUMBER = 9

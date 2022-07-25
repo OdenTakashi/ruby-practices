@@ -2,6 +2,7 @@
 
 class Shot
   attr_reader :mark
+
   STRIKE = 10
 
   def initialize(mark)
@@ -9,7 +10,7 @@ class Shot
   end
 
   def score
-  mark == 'X' ? STRIKE : mark.to_i
+    mark == 'X' ? STRIKE : mark.to_i
   end
 
   def defeated_all_pins?
