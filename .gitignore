@@ -120,3 +120,4 @@ $RECYCLE.BIN/
 *.lnk
 07.bowling_object/rspec_test/spec/examples.txt
 07.bowling_object/rspec_test/lib/todo.md
+07.bowling_object/rspec_test/Todo.json
