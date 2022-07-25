@@ -5,7 +5,6 @@ require_relative 'shot'
 
 class Game
   FINAL_FRAME_NUMBER = 9
-  STRIKE = 10
 
   def initialize(marks)
     @frames = build_frames(marks)
