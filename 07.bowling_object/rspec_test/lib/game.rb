@@ -26,7 +26,7 @@ class Game
     frames = []
     9.times do
       frame = shots.shift(2)
-      if frame.first.strike?
+      if frame.first.defeated_all_pins?
         frames << [STRIKE, nil]
         shots.unshift(frame.last)
       else

@@ -12,7 +12,7 @@ class Shot
   mark == 'X' ? STRIKE : mark.to_i
   end
 
-  def defeat_all_pins?
+  def defeated_all_pins?
     mark == 'X'
   end
 end
