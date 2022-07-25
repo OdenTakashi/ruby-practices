@@ -25,12 +25,12 @@ class Game
 
     frames = []
     9.times do
-      frame = shots.shift(2)
-      if frame.first.defeated_all_pins?
+      ary_of_shots_picked = shots.shift(2)
+      if ary_of_shots_picked.first.defeated_all_pins?
         frames << [STRIKE, nil]
-        shots.unshift(frame.last)
+        shots.unshift(ary_of_shots_picked.last)
       else
-        frames << frame.map(&:score)
+        frames << ary_of_shots_picked.map(&:score)
       end
     end
     frames << shots.map(&:score)
