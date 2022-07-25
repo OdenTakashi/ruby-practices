@@ -4,7 +4,7 @@ require_relative 'frame'
 require_relative 'shot'
 
 class Game
-  Amount_of_standard_frames = 9
+  AMOUNT_OF_STANDARD_FRAMES = 9
   STRIKE = 10
 
   def initialize(marks)
@@ -24,7 +24,7 @@ class Game
     shots = marks.map { |mark| Shot.new(mark) }
 
     frames = []
-    Amount_of_standard_frames.times do
+    AMOUNT_OF_STANDARD_FRAMES.times do
       ary_of_shots_picked = shots.shift(2)
       if ary_of_shots_picked.first.defeated_all_pins?
         frames << Frame.new(ary_of_shots_picked[0])
