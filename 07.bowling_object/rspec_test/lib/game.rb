@@ -9,7 +9,6 @@ class Game
 
   def initialize(marks)
     @frames = build_frames(marks)
-    binding.irb
   end
 
   def score
@@ -28,13 +27,13 @@ class Game
     9.times do
       ary_of_shots_picked = shots.shift(2)
       if ary_of_shots_picked.first.defeated_all_pins?
-        frames << Frame.new(ary_of_shots_picked[0], Shot.new(nil))
+        frames << Frame.new(ary_of_shots_picked[0])
         shots.unshift(ary_of_shots_picked.last)
       else
         frames << Frame.new(ary_of_shots_picked[0], ary_of_shots_picked[1])
       end
     end
-    frames << Frame.new(shots[0], shots[1], shots[3])
+    frames << Frame.new(shots[0], shots[1], shots[2])
   end
 
   def final_frame?(frame_number)
@@ -63,7 +62,3 @@ class Game
     end
   end
 end
-
-args = ARGV[0]
-game = Game.new(args)
-p game.score
