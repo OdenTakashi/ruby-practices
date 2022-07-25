@@ -3,7 +3,7 @@
 class Frame
   attr_reader :first_shot, :second_shot, :third_shot
 
-  STRIKE = 10
+  # STRIKE = 10
 
   def initialize(first_shot, second_shot = Shot.new(nil), third_shot = nil)
     @first_shot = first_shot
@@ -20,10 +20,10 @@ class Frame
   end
 
   def strike?
-    @first_shot.score == STRIKE
+    @first_shot.score == Game::STRIKE
   end
 
   def spare?
-    score == STRIKE
+    score == Game::STRIKE
   end
 end
