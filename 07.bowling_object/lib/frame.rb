@@ -18,10 +18,10 @@ class Frame
   end
 
   def strike?
-    @first_shot.score == Game::STRIKE
+    @first_shot.score == Game::FULL_MARKS
   end
 
   def spare?
-    score == Game::STRIKE
+    score == Game::FULL_MARKS
   end
 end
