@@ -25,12 +25,12 @@ class Game
 
     frames = []
     AMOUNT_OF_STANDARD_FRAMES.times do
-      ary_of_shots_picked = shots.shift(2)
-      if ary_of_shots_picked.first.defeated_all_pins?
-        frames << Frame.new(ary_of_shots_picked[0])
-        shots.unshift(ary_of_shots_picked.last)
+      picked_shots = shots.shift(2)
+      if picked_shots.first.defeated_all_pins?
+        frames << Frame.new(picked_shots[0])
+        shots.unshift(picked_shots.last)
       else
-        frames << Frame.new(ary_of_shots_picked[0], ary_of_shots_picked[1])
+        frames << Frame.new(picked_shots[0], picked_shots[1])
       end
     end
     frames << Frame.new(shots[0], shots[1], shots[2])
