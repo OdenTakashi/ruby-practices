@@ -6,7 +6,7 @@ class Frame
   def initialize(first_shot, second_shot = Shot.new(nil), third_shot = nil)
     @first_shot = first_shot
     @second_shot = second_shot
-    @third_shot = third_shot.nil? ? Shot.new(nil) : third_shot
+    @third_shot = third_shot || Shot.new(nil)
   end
 
   def score
