@@ -62,3 +62,7 @@ class Game
     end
   end
 end
+
+ary = ARGV[0]
+game = Game.new(ary)
+p game.score
