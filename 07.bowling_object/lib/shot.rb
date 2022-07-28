@@ -7,10 +7,10 @@ class Shot
   end
 
   def score
-    mark == 'X' ? Game::STRIKE : mark.to_i
+    @mark == 'X' ? Game::STRIKE : @mark.to_i
   end
 
   def defeated_all_pins?
-    mark == 'X'
+    @mark == 'X'
   end
 end
