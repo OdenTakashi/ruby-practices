@@ -1,3 +1,5 @@
+require_relative('reverse_file')
+
 class Ls
   attr_reader :files
   MAX_COLUMN_LENGTH = 3
@@ -50,5 +52,5 @@ class Ls
   end
 end
 
-ls = Ls.new(ARGV)
-ls.result
+file = ReverseFile.new(Ls.new(ARGV))
+file.reverse_files
