@@ -1,4 +1,5 @@
 require_relative('reverse_file')
+require('optparse')
 
 class Ls
   attr_reader :files
@@ -52,5 +53,12 @@ class Ls
   end
 end
 
-file = ReverseFile.new(Ls.new(ARGV))
-file.reverse_files
+params = ARGV.getopts('rla:')
+
+if params['r']
+  file = ReverseFile.new(Ls.new(ARGV))
+  file.reverse_files
+else
+  ls = Ls.new(ARGV)
+  ls.result
+end
