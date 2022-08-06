@@ -1,4 +1,5 @@
 require_relative('reverse_file')
+require_relative('all_file')
 require('optparse')
 
 class Ls
@@ -6,14 +7,15 @@ class Ls
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARCTERS = 23
 
-  def initialize(argv)
+#-aオプション適用時flagsにFile::FNM_DOTMATCHを当て隠しファイルを取得
+  def initialize(argv, flags = 0)
     directory_names = argv.empty? ? [Dir.pwd] : argv
-    @files = get_files(directory_names).flatten.sort.map{|file| file.ljust(MAX_NUMBER_OF_CHARCTERS)}
+    @files = get_files(directory_names, flags).flatten.sort.map{|file| file.ljust(MAX_NUMBER_OF_CHARCTERS)}
   end
 
-  def get_files(directories)
+  def get_files(directories, flags)
     directories.each_with_object([]) do |directory, files|
-      files << Dir.glob('*', base: directory)
+      files << Dir.glob('*', flags, base: directory)
     end
   end
 
@@ -53,12 +55,7 @@ class Ls
   end
 end
 
-params = ARGV.getopts('rla:')
+params = ARGV.getopts('rla')
 
-if params['r']
-  file = ReverseFile.new(Ls.new(ARGV))
-  file.reverse_files
-else
-  ls = Ls.new(ARGV)
-  ls.result
-end
+file = AllFile.new(ReverseFile.new(Ls.new(ARGV, File::FNM_DOTMATCH)))
+file.result
