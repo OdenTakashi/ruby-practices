@@ -9,7 +9,7 @@ class Director
   end
 
   def work
-    @director.complete_files
+    @director.adjust_number_of_iles
     grouped_files = @director.group_files
     @director.result(grouped_files)
   end

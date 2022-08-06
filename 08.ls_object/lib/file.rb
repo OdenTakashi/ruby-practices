@@ -9,6 +9,8 @@ class File
     @files = get_files(directory_names).flatten.sort.map { |file| file.ljust(MAX_NUMBER_OF_CHARCTERS) }
   end
 
+  private
+
   def get_files(directories)
     directories.each_with_object([]) do |directory, files|
       files << Dir.glob('*', base: directory)
