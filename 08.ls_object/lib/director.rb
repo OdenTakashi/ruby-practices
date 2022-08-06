@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative('file')
-require_relative('listbuilder')
+require_relative('list_builder')
 
 class Director
   def initialize(director)
