@@ -37,7 +37,7 @@ class ListBuilder
     @list.files.count % 3
   end
 
-  #メソッドは動詞で始めるべきだが使用箇所的に違和感がある。
+  # メソッドは動詞で始めるべきだが使用箇所的に違和感がある。
   def max_line_length
     if count_files_mod_by_three.zero?
       @list.files.count / MAX_COLUMN_LENGTH
