@@ -3,8 +3,8 @@
 class ListBuilder
   MAX_COLUMN_LENGTH = 3
 
-  def initialize(argv)
-    @list = File.new(argv)
+  def initialize(argv, flags = 0)
+    @list = File.new(argv, flags)
   end
 
   # ファイル数が3の倍数になるようにnilを追加
@@ -27,12 +27,17 @@ class ListBuilder
     end
   end
 
+  def reverse_files
+    @list.files.reverse!
+  end
+
   private
 
   def count_files_mod_by_three
     @list.files.count % 3
   end
 
+  #メソッドは動詞で始めるべきだが使用箇所的に違和感がある。
   def max_line_length
     if count_files_mod_by_three.zero?
       @list.files.count / MAX_COLUMN_LENGTH
