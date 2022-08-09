@@ -18,7 +18,9 @@ class Director
     @director.result(grouped_files)
   end
 
-  def work_with_l_option; end
+  def work_with_l_option
+    
+  end
 
   def result
     @director.reverse_files if @options['r']
