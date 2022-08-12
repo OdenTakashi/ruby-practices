@@ -1,13 +1,14 @@
 # frozen_string_literal: true
-
-require_relative('file')
-require_relative('list_builder')
-require('optparse')
+require_relative 'virtual_file'
+require_relative 'list_builder'
+require 'optparse'
 
 class Director
   def initialize(argv)
-    @options = ARGV.getopts('arl')
-    flags = @options['a'] ? File::FNM_DOTMATCH : 0
+    # opt = OptionParser.new
+    # @options = opt.getopts(argv, 'a', 'r', 'l') 
+    self.options = argv.getopts('arl')
+    flags = options['a'] ? File::FNM_DOTMATCH : 0
     @director = ListBuilder.new(argv, flags)
   end
 
@@ -17,12 +18,18 @@ class Director
     @director.result(grouped_files)
   end
 
-  def work_with_l_option; end
+  def work_with_l_option
+    @director.result_with_l_option
+  end
 
   def result
-    @director.reverse_files if @options['r']
-    @options['l'] ? work_with_l_option : work
+    @director.reverse_files if options['r']
+    options['l'] ? work_with_l_option : work
   end
+
+  private
+  attr_accessor :options
 end
+binding.irb
 
 Director.new(ARGV).result
