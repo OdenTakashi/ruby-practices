@@ -30,6 +30,7 @@ class ListBuilder
     @list.files.each do |file|
       file_path = File.expand_path(file)
       p file_path
+      binding.irb
     end
   end
 
