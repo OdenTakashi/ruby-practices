@@ -5,8 +5,8 @@ require 'optparse'
 
 class Director
   def initialize(argv)
-    self.options = argv.getopts('arl')
-    flags = options['a'] ? File::FNM_DOTMATCH : 0
+    @options = argv.getopts('arl')
+    flags = @options['a'] ? File::FNM_DOTMATCH : 0
     @director = ListBuilder.new(argv, flags)
   end
 
@@ -21,12 +21,9 @@ class Director
   end
 
   def result
-    @director.reverse_files if options['r']
-    options['l'] ? work_with_l_option : work
+    @director.reverse_files if @options['r']
+    @options['l'] ? work_with_l_option : work
   end
-
-  private
-  attr_accessor :options
 end
 
 Director.new(ARGV).result
