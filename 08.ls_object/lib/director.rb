@@ -5,8 +5,6 @@ require 'optparse'
 
 class Director
   def initialize(argv)
-    # opt = OptionParser.new
-    # @options = opt.getopts(argv, 'a', 'r', 'l') 
     self.options = argv.getopts('arl')
     flags = options['a'] ? File::FNM_DOTMATCH : 0
     @director = ListBuilder.new(argv, flags)
@@ -30,6 +28,5 @@ class Director
   private
   attr_accessor :options
 end
-binding.irb
 
 Director.new(ARGV).result
