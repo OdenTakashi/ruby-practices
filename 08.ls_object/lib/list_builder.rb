@@ -44,6 +44,15 @@ class ListBuilder
     end
   end
 
+  def result(transposed_files)
+    transposed_files.each do |files|
+      files_arranged = arrange_character_length(files)
+      puts files_arranged.join(' ')
+    end
+  end
+
+  private
+
   def conversion_permission(permission_octal)
     overhaul_permission = permission_octal.to_i.digits.reverse
     permission_conversioned = overhaul_permission[-3..].map do |number|
@@ -58,15 +67,6 @@ class ListBuilder
     end
     permission_conversioned.join
   end
-
-  def result(transposed_files)
-    transposed_files.each do |files|
-      files_arranged = arrange_character_length(files)
-      puts files_arranged.join(' ')
-    end
-  end
-
-  private
 
   def arrange_character_length(files)
     files.map { |file| file&.ljust(MAX_NUMBER_OF_CHARACTER) }
