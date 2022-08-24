@@ -3,13 +3,14 @@ require 'etc'
 
 class ListBuilder
   MAX_COLUMN_LENGTH = 3
+  MAX_NUMBER_OF_CHARACTER = 23
 
   def initialize(argv, flags = 0)
     @list = VirtualFile.new(argv, flags)
   end
 
   # ファイル数が3の倍数になるようにnilを追加
-  def adjust_number_of_iles
+  def adjust_number_of_files
     case count_files_mod_by_three
     when 1
       2.times { @list.files.push(nil) }
@@ -30,17 +31,22 @@ class ListBuilder
     @list.files.each do |file|
       file_path = File.expand_path(file)
       p file_path
-      binding.irb
+      
     end
   end
 
   def result(transposed_files)
-    transposed_files.each do |file|
-      puts file.join(' ')
+    transposed_files.each do |files|
+      files_arranged = arrange_character_length(files)
+      puts files_arranged.join(' ')
     end
   end
 
   private
+
+  def arrange_character_length(files)
+    files.map {|file| file.ljust(MAX_NUMBER_OF_CHARACTER) unless file.nil?}
+  end
 
   def count_files_mod_by_three
     @list.files.count % 3

@@ -11,7 +11,7 @@ class Director
   end
 
   def work
-    @builder.adjust_number_of_iles
+    @builder.adjust_number_of_files
     grouped_files = @builder.group_files
     @builder.result(grouped_files)
   end
