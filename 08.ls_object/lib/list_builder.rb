@@ -29,6 +29,13 @@ class ListBuilder
     @list.files.reverse!
   end
 
+  def result(grouped_files)
+    grouped_files.each do |files|
+      files_arranged = arrange_character_length(files)
+      puts files_arranged.join(' ')
+    end
+  end
+
   def result_with_l_option
     @list.files.each do |file|
       user_id = Process.uid
@@ -41,13 +48,6 @@ class ListBuilder
       permission = conversion_permission(permission_octal)
 
       puts "#{permission} #{stat.nlink} #{user_name} #{group_name}  #{File.size(file_path)} #{stat.mtime.to_s.slice!(6..15)} #{file} "
-    end
-  end
-
-  def result(grouped_files)
-    grouped_files.each do |files|
-      files_arranged = arrange_character_length(files)
-      puts files_arranged.join(' ')
     end
   end
 
