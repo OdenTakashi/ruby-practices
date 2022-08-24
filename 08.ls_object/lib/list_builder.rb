@@ -44,8 +44,8 @@ class ListBuilder
     end
   end
 
-  def result(transposed_files)
-    transposed_files.each do |files|
+  def result(grouped_files)
+    grouped_files.each do |files|
       files_arranged = arrange_character_length(files)
       puts files_arranged.join(' ')
     end
@@ -55,10 +55,11 @@ class ListBuilder
 
   def conversion_permission(permission_octal)
     overhaul_permission = permission_octal.to_i.digits.reverse
+    #[-3..]によって権限の値のみ操作
     permission_conversioned = overhaul_permission[-3..].map do |number|
       PERMISSION_TABLE[number]
     end
-
+    #[0..1]によってファイルかディレクトリを判定
     case overhaul_permission[0..1].join
     when '10'
       permission_conversioned.prepend('--')
