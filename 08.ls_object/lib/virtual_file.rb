@@ -10,7 +10,7 @@ class VirtualFile
 
   private
 
-  def get_files(flags)  
+  def get_files(flags)
     Dir.glob('*', flags, base: @directory_name)
   end
 end

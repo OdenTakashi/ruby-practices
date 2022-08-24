@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'virtual_file'
 require_relative 'list_builder'
 require 'optparse'

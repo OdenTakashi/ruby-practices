@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'etc'
 
 class ListBuilder
@@ -16,7 +17,7 @@ class ListBuilder
     when 1
       2.times { @list.files.push(nil) }
     when 2
-      1.times { @list.files.push(nil) }
+      @list.files.push(nil)
     end
   end
 
@@ -55,9 +56,9 @@ class ListBuilder
     when '40'
       permission_conversioned.prepend('d-')
     end
-    return permission_conversioned.join
+    permission_conversioned.join
   end
-  #[1, 0, 0, 6, 4, 4]
+
   def result(transposed_files)
     transposed_files.each do |files|
       files_arranged = arrange_character_length(files)
@@ -68,7 +69,7 @@ class ListBuilder
   private
 
   def arrange_character_length(files)
-    files.map {|file| file.ljust(MAX_NUMBER_OF_CHARACTER) unless file.nil?}
+    files.map { |file| file&.ljust(MAX_NUMBER_OF_CHARACTER) }
   end
 
   def count_files_mod_by_three
