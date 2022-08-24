@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VirtualFile
-  attr_reader :files, :directory_names
+  attr_reader :files, :directory_name
 
   def initialize(argv, flags = 0)
     @directory_name = argv.empty? ? Dir.pwd : argv[0]
@@ -10,7 +10,7 @@ class VirtualFile
 
   private
 
-  def get_files(flags)
+  def get_files(flags)  
     Dir.glob('*', flags, base: @directory_name)
   end
 end

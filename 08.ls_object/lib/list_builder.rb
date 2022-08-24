@@ -4,6 +4,7 @@ require 'etc'
 class ListBuilder
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARACTER = 23
+  PERMISSION_TABLE = { 0 => '---', 1 => '--x', 2 => '-w-', 3 => '-wx', 4 => 'r--', 5 => 'r-x', 6 => 'rw-', 7 => 'rwx' }.freeze
 
   def initialize(argv, flags = 0)
     @list = VirtualFile.new(argv, flags)
@@ -29,12 +30,34 @@ class ListBuilder
 
   def result_with_l_option
     @list.files.each do |file|
-      file_path = File.expand_path(file)
-      p file_path
-      
+      user_id = Process.uid
+      user_name = Etc.getpwuid(user_id).name
+      group_id   = Process.gid
+      group_name = Etc.getgrgid(group_id).name
+      file_path = File.expand_path(file, @list.directory_name)
+      stat = File::Stat.new(file_path)
+      permission_octal = stat.mode.to_s(8)
+      permission = conversion_permission(permission_octal)
+
+      puts "#{permission} #{stat.nlink} #{user_name} #{group_name}  #{File.size(file_path)} #{stat.mtime.to_s.slice!(6..15)} #{file} "
     end
   end
 
+  def conversion_permission(permission_octal)
+    overhaul_permission = permission_octal.to_i.digits.reverse
+    permission_conversioned = overhaul_permission[-3..].map do |number|
+      PERMISSION_TABLE[number]
+    end
+
+    case overhaul_permission[0..1].join
+    when '10'
+      permission_conversioned.prepend('--')
+    when '40'
+      permission_conversioned.prepend('d-')
+    end
+    return permission_conversioned.join
+  end
+  #[1, 0, 0, 6, 4, 4]
   def result(transposed_files)
     transposed_files.each do |files|
       files_arranged = arrange_character_length(files)
