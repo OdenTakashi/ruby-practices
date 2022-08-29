@@ -11,19 +11,19 @@ class Director
     @builder = ListBuilder.new(argv, flags)
   end
 
-  def work
+  def run
     @builder.adjust_number_of_files
     grouped_files = @builder.group_files
     @builder.result(grouped_files)
   end
 
-  def work_with_l_option
+  def run_with_l_option
     @builder.result_with_l_option
   end
 
   def result
     @builder.reverse_files if @options['r']
-    @options['l'] ? work_with_l_option : work
+    @options['l'] ? run_with_l_option : run
   end
 end
 
