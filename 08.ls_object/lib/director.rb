@@ -26,5 +26,3 @@ class Director
     @options['l'] ? run_with_l_option : run
   end
 end
-
-Director.new(ARGV).result
