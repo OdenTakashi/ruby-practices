@@ -102,7 +102,7 @@ class ListBuilder
 
   private
 
-  def conversion_permission(permission_octal)
+  def convert_permission(permission_octal)
     overhaul_permission = permission_octal.to_i.digits.reverse
     # [-3..]によって権限の値のみ操作
     permission_conversioned = overhaul_permission[-3..].map do |number|
