@@ -29,7 +29,7 @@ class ListBuilder
     @list.files.reverse!
   end
 
-  def result(grouped_files)
+  def output_standard_format(grouped_files)
     grouped_files.each do |files|
       files_arranged = arrange_character_length(files)
       puts files_arranged.join(' ')
@@ -43,7 +43,7 @@ class ListBuilder
       permission_octal = stat.mode.to_s(8)
 
       long_format = {
-        permission: conversion_permission(permission_octal),
+        permission: convert_permission(permission_octal),
         links: stat.nlink.to_s,
         user_name: Etc.getpwuid(stat.uid).name,
         group_name: Etc.getgrgid(stat.gid).name,
