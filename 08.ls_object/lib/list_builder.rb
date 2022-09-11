@@ -36,23 +36,24 @@ class ListBuilder
     end
   end
 
-  def get_long_formats
-    @list.files.each_with_object([]) do |file, long_formats|
-      file_path = File.expand_path(file, @list.directory_name)
-      stat = File::Stat.new(file_path)
-      permission_octal = stat.mode.to_s(8)
+  def output_long_format
+    max_length = get_max_length(get_long_formats)
+    get_long_formats.each do |long_format|
+      puts "#{long_format[:permission]}  #{long_format[:links].rjust(max_length[:links])} #{long_format[:user_name].ljust(max_length[:user_name])}  #{long_format[:group_name].ljust(max_length[:group_name])}  #{long_format[:file_size].rjust(max_length[:file_size])} #{long_format[:last_update_time].rjust(max_length[:last_update_time])} #{long_format[:file_name].ljust(MAX_NUMBER_OF_CHARACTER)} "
+    end
+  end
 
-      long_format = {
-        permission: convert_permission(permission_octal),
-        links: stat.nlink.to_s,
-        user_name: Etc.getpwuid(stat.uid).name,
-        group_name: Etc.getgrgid(stat.gid).name,
-        file_size: File.size(file_path).to_s,
-        last_update_time: get_mtime(stat),
-        file_name: file
-      }
+  private
 
-      long_formats << long_format
+  def get_maximum_length(value)
+    value.map(&:length).max
+  end
+
+  def get_mtime(stat)
+    if (Time.now - stat.mtime) / (60 * 60 * 24) >= (365 / 2) || (Time.now - stat.mtime).negative?
+      stat.mtime.strftime('%_m %_d  %Y')
+    else
+      stat.mtime.strftime('%_m %_d %H:%M')
     end
   end
 
@@ -81,26 +82,25 @@ class ListBuilder
     }
   end
 
-  def get_maximum_length(value)
-    value.map(&:length).max
-  end
+  def get_long_formats
+    @list.files.each_with_object([]) do |file, long_formats|
+      file_path = File.expand_path(file, @list.directory_name)
+      stat = File::Stat.new(file_path)
+      permission_octal = stat.mode.to_s(8)
 
-  def output_long_format
-    max_length = get_max_length(get_long_formats)
-    get_long_formats.each do |long_format|
-      puts "#{long_format[:permission]}  #{long_format[:links].rjust(max_length[:links])} #{long_format[:user_name].ljust(max_length[:user_name])}  #{long_format[:group_name].ljust(max_length[:group_name])}  #{long_format[:file_size].rjust(max_length[:file_size])} #{long_format[:last_update_time].rjust(max_length[:last_update_time])} #{long_format[:file_name].ljust(MAX_NUMBER_OF_CHARACTER)} "
+      long_format = {
+        permission: convert_permission(permission_octal),
+        links: stat.nlink.to_s,
+        user_name: Etc.getpwuid(stat.uid).name,
+        group_name: Etc.getgrgid(stat.gid).name,
+        file_size: File.size(file_path).to_s,
+        last_update_time: get_mtime(stat),
+        file_name: file
+      }
+
+      long_formats << long_format
     end
   end
-
-  def get_mtime(stat)
-    if (Time.now - stat.mtime) / (60 * 60 * 24) >= (365 / 2) || (Time.now - stat.mtime).negative?
-      stat.mtime.strftime('%_m %_d  %Y')
-    else
-      stat.mtime.strftime('%_m %_d %H:%M')
-    end
-  end
-
-  private
 
   def convert_permission(permission_octal)
     overhaul_permission = permission_octal.to_i.digits.reverse
