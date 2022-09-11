@@ -85,7 +85,7 @@ class ListBuilder
     value.map(&:length).max
   end
 
-  def result_with_l_option
+  def output_long_format
     max_length = get_max_length(get_long_formats)
     get_long_formats.each do |long_format|
       puts "#{long_format[:permission]}  #{long_format[:links].rjust(max_length[:links])} #{long_format[:user_name].ljust(max_length[:user_name])}  #{long_format[:group_name].ljust(max_length[:group_name])}  #{long_format[:file_size].rjust(max_length[:file_size])} #{long_format[:last_update_time].rjust(max_length[:last_update_time])} #{long_format[:file_name].ljust(MAX_NUMBER_OF_CHARACTER)} "

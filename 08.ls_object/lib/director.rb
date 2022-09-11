@@ -24,7 +24,7 @@ class Director
     @builder.result(grouped_files)
   end
 
-  def run_with_l_option
-    @builder.result_with_l_option
+  def output_long_format
+    @builder.output_long_format
   end
 end
