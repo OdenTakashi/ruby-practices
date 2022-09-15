@@ -1,11 +1,19 @@
 require_relative 'path_list'
+require 'optparse'
 
 class PathListFormatter
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARACTER = 23
 
   def initialize(argv)
-    @path_list = PathList.new(argv)
+    @options = argv.getopts('arl')
+    flags = @options['a'] ? File::FNM_DOTMATCH : 0
+    @path_list = PathList.new(argv, flags)
+    reverse_list if @options['r']
+  end
+
+  def reverse_list
+    @path_list.list.reverse!
   end
 
   def output_standard_format
@@ -36,14 +44,15 @@ class PathListFormatter
 
   def adjust_number_of_files
     case count_files_mod_by_three
-    when 0
-      @path_list.list
     when 1
       2.times { @path_list.list.push(Path.new(nil)) }
     when 2
       @path_list.list.push(Path.new(nil))
     end
+    @path_list.list
+  end
+
+  def run
+
   end
 end
-
-PathListFormatter.new(ARGV).output_standard_format

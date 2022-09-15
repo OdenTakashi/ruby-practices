@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/director'
+require_relative '../lib/path_list_formatter'
 
-Director.new(ARGV).run
+
+PathListFormatter.new(ARGV).output_standard_format
