@@ -55,7 +55,7 @@ class PathListFormatter
     paths.map { |path| path.name&.ljust(MAX_NUMBER_OF_CHARACTER) }
   end
 
-  def get_max_length
+  def gather_max_length
     {
       links: @path_list.list.map { |path| path.links.to_s.size }.max,
       user_name: @path_list.list.map { |path| path.user_name.size }.max,
@@ -66,7 +66,7 @@ class PathListFormatter
   end
 
   def output_long_format
-    max_length = get_max_length
+    max_length = gather_max_length
     @path_list.list.each do |path|
       print(
         path.type.to_s,
