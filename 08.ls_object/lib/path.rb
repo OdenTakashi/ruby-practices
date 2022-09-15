@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'etc'
 
 class Path
@@ -37,9 +39,7 @@ class Path
   end
 
   def convert_permission(stat)
-    permission = stat.mode.to_s(8)[-3..-1].split('')
+    permission = stat.mode.to_s(8)[-3..].split('')
     permission.map { |n| PERMISSION_TABLE[n] }.join
   end
 end
-
-

@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 require_relative('path')
 
 class PathList
   attr_reader :list
+
   def initialize(argv, flags)
     @parent_directory = argv.empty? ? Dir.pwd : argv[0]
     paths = get_paths(flags).sort
-    @list = paths.map{ |path| Path.new(path) }
+    @list = paths.map { |path| Path.new(path) }
   end
 
   def search_detail
@@ -20,4 +23,3 @@ class PathList
     Dir.glob('*', flags, base: @parent_directory)
   end
 end
-

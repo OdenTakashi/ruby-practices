@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'path_list'
 require 'optparse'
 
@@ -50,16 +52,16 @@ class PathListFormatter
   end
 
   def extract_names(paths)
-    paths.map { |path| path.name&.ljust(MAX_NUMBER_OF_CHARACTER)}
+    paths.map { |path| path.name&.ljust(MAX_NUMBER_OF_CHARACTER) }
   end
 
   def get_max_length
     {
-      links: @path_list.list.map { |path| path.links.to_s.size}.max,
-      user_name: @path_list.list.map { |path| path.user_name.size}.max,
-      group_name: @path_list.list.map { |path| path.group_name.size}.max,
-      file_size: @path_list.list.map { |path| path.file_size.to_s.size}.max,
-      last_update_time: @path_list.list.map { |path| path.last_update_time.size}.max
+      links: @path_list.list.map { |path| path.links.to_s.size }.max,
+      user_name: @path_list.list.map { |path| path.user_name.size }.max,
+      group_name: @path_list.list.map { |path| path.group_name.size }.max,
+      file_size: @path_list.list.map { |path| path.file_size.to_s.size }.max,
+      last_update_time: @path_list.list.map { |path| path.last_update_time.size }.max
     }
   end
 
@@ -67,13 +69,13 @@ class PathListFormatter
     max_length = get_max_length
     @path_list.list.each do |path|
       print(
-        "#{path.type}",
-        "#{path.permission}",
-        "#{path.links.to_s.rjust(max_length[:links] + 1)}",
-        "#{path.user_name.rjust(max_length[:user_name] + 1)}",
-        "#{path.group_name.rjust(max_length[:group_name] + 1)}",
-        "#{path.file_size.to_s.rjust(max_length[:file_size] + 1)}",
-        "#{path.last_update_time.rjust(max_length[:last_update_time] + 1)}",
+        path.type.to_s,
+        path.permission.to_s,
+        path.links.to_s.rjust(max_length[:links] + 1).to_s,
+        path.user_name.rjust(max_length[:user_name] + 1).to_s,
+        path.group_name.rjust(max_length[:group_name] + 1).to_s,
+        path.file_size.to_s.rjust(max_length[:file_size] + 1).to_s,
+        path.last_update_time.rjust(max_length[:last_update_time] + 1).to_s,
         " #{path.name.ljust(MAX_NUMBER_OF_CHARACTER)}\n"
       )
     end
