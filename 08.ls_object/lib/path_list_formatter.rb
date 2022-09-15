@@ -69,13 +69,13 @@ class PathListFormatter
     max_length = gather_max_length
     @path_list.list.each do |path|
       print(
-        path.type.to_s,
-        path.permission.to_s,
-        path.links.to_s.rjust(max_length[:links] + 1).to_s,
-        path.user_name.rjust(max_length[:user_name] + 1).to_s,
-        path.group_name.rjust(max_length[:group_name] + 1).to_s,
+        path.type,
+        path.permission,
+        path.links.to_s.rjust(max_length[:links] + 1),
+        path.user_name.rjust(max_length[:user_name] + 1),
+        path.group_name.rjust(max_length[:group_name] + 1),
         path.file_size.to_s.rjust(max_length[:file_size] + 1).to_s,
-        path.last_update_time.rjust(max_length[:last_update_time] + 1).to_s,
+        path.last_update_time.rjust(max_length[:last_update_time] + 1),
         " #{path.name.ljust(MAX_NUMBER_OF_CHARACTER)}\n"
       )
     end
