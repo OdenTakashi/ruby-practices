@@ -55,10 +55,10 @@ class PathListFormatter
 
   def get_max_length
     {
-      links: @path_list.list.map { |path| path.links.size}.max,
+      links: @path_list.list.map { |path| path.links.to_s.size}.max,
       user_name: @path_list.list.map { |path| path.user_name.size}.max,
       group_name: @path_list.list.map { |path| path.group_name.size}.max,
-      file_size: @path_list.list.map { |path| path.file_size.size}.max,
+      file_size: @path_list.list.map { |path| path.file_size.to_s.size}.max,
       last_update_time: @path_list.list.map { |path| path.last_update_time.size}.max
     }
   end
@@ -69,12 +69,12 @@ class PathListFormatter
       print(
         "#{path.type}",
         "#{path.permission}",
-        "#{path.links.to_s.rjust(max_length[:links])}",
-        "#{path.user_name.ljust(max_length[:user_name])}",
-        "#{path.group_name.ljust(max_length[:group_name])}",
-        "#{path.file_size.to_s.rjust(max_length[:file_size])}",
-        "#{path.last_update_time.rjust(max_length[:last_update_time])}",
-        "#{path.name}\n"
+        "#{path.links.to_s.rjust(max_length[:links] + 1)}",
+        "#{path.user_name.rjust(max_length[:user_name] + 1)}",
+        "#{path.group_name.rjust(max_length[:group_name] + 1)}",
+        "#{path.file_size.to_s.rjust(max_length[:file_size] + 1)}",
+        "#{path.last_update_time.rjust(max_length[:last_update_time] + 1)}",
+        " #{path.name.ljust(MAX_NUMBER_OF_CHARACTER)}\n"
       )
     end
   end
