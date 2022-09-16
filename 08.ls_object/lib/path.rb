@@ -21,12 +21,12 @@ class Path
     @user_name = Etc.getpwuid(stat.uid).name
     @group_name = Etc.getgrgid(stat.gid).name
     @file_size = File.size(expand_path)
-    @last_update_time = get_mtime(stat)
+    @last_update_time = fetch_mtime(stat)
   end
 
   private
 
-  def get_mtime(stat)
+  def fetch_mtime(stat)
     if (Time.now - stat.mtime) / (60 * 60 * 24) >= (365 / 2) || (Time.now - stat.mtime).negative?
       stat.mtime.strftime('%_m %_d  %Y')
     else
