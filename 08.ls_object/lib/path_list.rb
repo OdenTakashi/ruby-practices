@@ -7,7 +7,7 @@ class PathList
 
   def initialize(argv, flags)
     @parent_directory = argv.empty? ? Dir.pwd : argv[0]
-    paths = get_paths(flags).sort
+    paths = fetch_paths(flags).sort
     @list = paths.map { |path| Path.new(path) }
   end
 
@@ -19,7 +19,7 @@ class PathList
 
   private
 
-  def get_paths(flags)
+  def fetch_paths(flags)
     Dir.glob('*', flags, base: @parent_directory)
   end
 end
