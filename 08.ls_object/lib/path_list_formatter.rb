@@ -26,7 +26,7 @@ class PathListFormatter
   end
 
   def count_files_mod_by_three
-    @path_list.list.count % 3
+    @path_list.list.count % MAX_COLUMN_LENGTH
   end
 
   def max_line_length
@@ -38,11 +38,8 @@ class PathListFormatter
   end
 
   def adjust_number_of_files
-    case count_files_mod_by_three
-    when 1
-      2.times { @path_list.list.push(Path.new(nil)) }
-    when 2
-      @path_list.list.push(Path.new(nil))
+    unless count_files_mod_by_three == 0
+      (MAX_COLUMN_LENGTH - count_files_mod_by_three).times { @path_list.list.push(Path.new(nil))}
     end
     @path_list.list
   end
