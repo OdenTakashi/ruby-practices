@@ -3,10 +3,12 @@
 require_relative('path')
 
 class PathList
-  attr_reader :list
+  attr_reader :list, :options
 
-  def initialize(argv, flags)
+  def initialize(argv)
+    @options = argv.getopts('arl')
     @parent_directory = argv.empty? ? Dir.pwd : argv[0]
+    flags = @options['a'] ? File::FNM_DOTMATCH : 0
     paths = fetch_paths(flags).sort
     @list = paths.map { |path| Path.new(path) }
   end

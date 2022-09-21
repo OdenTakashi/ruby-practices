@@ -7,16 +7,14 @@ class PathListFormatter
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARACTER = 23
 
-  def initialize(argv)
-    @options = argv.getopts('arl')
-    flags = @options['a'] ? File::FNM_DOTMATCH : 0
-    @path_list = PathList.new(argv, flags)
-    reverse_list if @options['r']
-    @path_list.search_detail if @options['l']
+  def initialize(path_list)
+    @path_list = path_list
+    reverse_list if @path_list.options['r']
+    @path_list.search_detail if @path_list.options['l']
   end
 
   def run
-    @options['l'] ? output_long_format : output_standard_format
+    @path_list.options['l'] ? output_long_format : output_standard_format
   end
 
   private

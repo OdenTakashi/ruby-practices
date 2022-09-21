@@ -2,4 +2,7 @@
 
 require_relative '../lib/path_list_formatter'
 
-PathListFormatter.new(ARGV).run
+path_list = PathList.new(ARGV)
+formatter = PathListFormatter.new(path_list)
+formatter.run
+
