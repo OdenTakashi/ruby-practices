@@ -5,7 +5,16 @@ require 'etc'
 class Path
   attr_reader :name, :links, :user_name, :group_name, :file_size, :last_update_time, :permission, :type
 
-  PERMISSION_TABLE = { '0' => '---', '1' => '--x', '2' => '-w-', '3' => '-wx', '4' => 'r--', '5' => 'r-x', '6' => 'rw-', '7' => 'rwx' }.freeze
+  PERMISSION_TABLE = {
+    '0' => '---',
+    '1' => '--x',
+    '2' => '-w-',
+    '3' => '-wx',
+    '4' => 'r--',
+    '5' => 'r-x',
+    '6' => 'rw-',
+    '7' => 'rwx'
+  }.freeze
 
   def initialize(path)
     @name = path
