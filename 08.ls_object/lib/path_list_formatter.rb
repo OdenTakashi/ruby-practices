@@ -36,9 +36,7 @@ class PathListFormatter
   end
 
   def adjust_number_of_files
-    unless count_files_mod_by_three == 0
-      (MAX_COLUMN_LENGTH - count_files_mod_by_three).times { @path_list.list.push(Path.new(nil))}
-    end
+    (MAX_COLUMN_LENGTH - count_files_mod_by_three).times { @path_list.list.push(Path.new(nil)) } unless count_files_mod_by_three.zero?
     @path_list.list
   end
 
