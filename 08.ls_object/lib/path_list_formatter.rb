@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'path_list'
-require 'optparse'
 
 class PathListFormatter
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARACTER = 23
 
-  def initialize(path_list)
+  def initialize(path_list, r_option, l_option)
     @path_list = path_list
-    reverse_list if @path_list.options['r']
-    @path_list.search_detail if @path_list.options['l']
+    reverse_list if r_option
+    @path_list.search_detail if l_option
   end
 
-  def run
-    @path_list.options['l'] ? output_long_format : output_standard_format
+  def run(l_option)
+    l_option ? output_long_format : output_standard_format
   end
 
   private
