@@ -44,6 +44,7 @@ class PathListFormatter
 
   def extract_names(paths)
     max_length = @path_list.list.map { |path| path.name&.size }.compact.max
+    #パス名を最大文字数+6に設定。+6は標準lsの確かな数値はわからなかったので憶測です。
     paths.map { |path| path.name&.ljust(max_length + 6) }
   end
 
