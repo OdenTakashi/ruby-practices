@@ -4,7 +4,6 @@ require_relative 'path_list'
 
 class PathListFormatter
   MAX_COLUMN_LENGTH = 3
-  MAX_NUMBER_OF_CHARACTER = 23
 
   def initialize(path_list, reverse: false, long_format: false)
     @path_list = path_list
@@ -44,7 +43,8 @@ class PathListFormatter
   end
 
   def extract_names(paths)
-    paths.map { |path| path.name&.ljust(MAX_NUMBER_OF_CHARACTER) }
+    max_length = @path_list.list.map { |path| path.name&.size }.compact.max
+    paths.map { |path| path.name&.ljust(max_length + 6) }
   end
 
   def gather_max_length
