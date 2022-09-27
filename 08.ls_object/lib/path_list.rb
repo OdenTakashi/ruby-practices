@@ -5,9 +5,9 @@ require_relative('path')
 class PathList
   attr_reader :list, :options
 
-  def initialize(argv, a_option)
+  def initialize(argv, dotmatch: false)
     @parent_directory = argv.empty? ? Dir.pwd : argv[0]
-    flags = a_option ? File::FNM_DOTMATCH : 0
+    flags = dotmatch ? File::FNM_DOTMATCH : 0
     paths = fetch_paths(flags).sort
     @list = paths.map { |path| Path.new(path) }
   end

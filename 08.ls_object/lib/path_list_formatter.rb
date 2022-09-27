@@ -6,14 +6,14 @@ class PathListFormatter
   MAX_COLUMN_LENGTH = 3
   MAX_NUMBER_OF_CHARACTER = 23
 
-  def initialize(path_list, r_option, l_option)
+  def initialize(path_list, reverse: false, long_format: false)
     @path_list = path_list
-    reverse_list if r_option
-    @path_list.search_detail if l_option
+    reverse_list if reverse
+    @path_list.search_detail if long_format
   end
 
-  def run(l_option)
-    l_option ? output_long_format : output_standard_format
+  def run(long_format: false)
+    long_format ? output_long_format : output_standard_format
   end
 
   private
